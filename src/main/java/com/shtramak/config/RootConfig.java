@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
         excludeFilters = {@Filter(type = FilterType.ANNOTATION, classes = {EnableWebMvc.class, Controller.class})})
 @EnableTransactionManagement
 public class RootConfig {
-    @Bean
+    @Bean("transactionManager")
     public PlatformTransactionManager platformTransactionManager(EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
