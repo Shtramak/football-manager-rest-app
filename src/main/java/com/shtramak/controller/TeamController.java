@@ -33,6 +33,11 @@ public class TeamController {
         return service.getAll();
     }
 
+    @GetMapping("/{id}")
+    public Team getById(@PathVariable Long id){
+        return service.getById(id).orElseThrow();
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@RequestBody Team team) {
@@ -82,4 +87,5 @@ public class TeamController {
     public void removePlayerFromTeam(@PathVariable("id") Long teamId, @PathVariable("playerId") Long playerId) {
         service.removePlayer(teamId, playerId);
     }
+
 }

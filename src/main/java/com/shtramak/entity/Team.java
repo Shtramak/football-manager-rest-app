@@ -49,7 +49,7 @@ public class Team {
     public void setCaptainId(Long captainId) {
         boolean isValidId = players.stream()
                 .map(Player::getId)
-                .anyMatch(i -> i.equals(captainId));
+                .anyMatch(i -> i.equals(captainId) || captainId == null);
         if (!isValidId) {
             throw new IllegalArgumentException("Captain must be one of the team player!");
         }
