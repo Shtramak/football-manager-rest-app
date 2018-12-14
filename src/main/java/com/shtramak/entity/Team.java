@@ -9,6 +9,7 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,11 +23,16 @@ public class Team {
     @Id
     @GeneratedValue
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "team", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonIgnore
     private List<Player> players = new ArrayList<>();
+
+    @Column(name = "captain_id")
     @Setter(AccessLevel.NONE)
     private Long captainId;
 
@@ -47,6 +53,6 @@ public class Team {
         if (!isValidId) {
             throw new IllegalArgumentException("Captain must be one of the team player!");
         }
-
+        this.captainId = captainId;
     }
 }

@@ -12,4 +12,8 @@ public interface TeamService extends CrudService<Team> {
     Optional<Player> getCaptain(Long teamId);
 
     void addPlayer(Long teamId, Player player);
+
+    void setCaptain(Long teamId, Long captainId);
+
+    void removePlayer(Long teamId, Long playerId);
 }
