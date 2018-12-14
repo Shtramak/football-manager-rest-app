@@ -2,6 +2,7 @@ package com.shtramak.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 
 import com.shtramak.entity.Player;
@@ -32,10 +33,12 @@ public class TeamServiceImpl implements TeamService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Player> getCaptain(Long teamId) {
-        List<Player> players = getPlayers(teamId);
+        Team team = getTeamWithPlayersOrThrowNoSuchElementException(teamId);
+        List<Player> players = team.getPlayers();
+        Long captainId = team.getCaptainId();
         return players.stream()
-                .filter(player -> player.getId().equals(teamId))
-                .findFirst();
+                .filter(player -> Objects.equals(captainId,player.getId()))
+                .findAny();
     }
 
     @Override
@@ -65,11 +68,13 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Team> getAll() {
         return repository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Team> getById(Long id) {
         return repository.findById(id);
     }
@@ -92,3 +97,5 @@ public class TeamServiceImpl implements TeamService {
 }
 
 // todo How to throw Exception, Where to handle? All in Global ExceptionHandler?
+
+// todo can't use captainId in Json to update Team... Is it because of the setter?
