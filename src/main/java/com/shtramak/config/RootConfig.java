@@ -23,3 +23,5 @@ public class RootConfig {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }
+
+//todo is it ok to return implementations of interfaces as a Beans instead of interfaces they implement
